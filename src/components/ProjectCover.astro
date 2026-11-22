@@ -1,0 +1,42 @@
+---
+import type { Lang, Project } from '../data/projects';
+
+interface Props { project: Project; lang: Lang; size?: 'lg' | 'sm' }
+const { project: p, lang, size = 'lg' } = Astro.props;
+---
+{p.image ? (
+  <img class={`cover ${size}`} src={p.image} alt={`${p.name}: ${p.category[lang]}`} loading="lazy" decoding="async" width="1600" height="1000" />
+) : (
+  <div class={`cover gen ${size}`} aria-hidden="true">
+    <span class="name">{p.name}</span>
+    <span class="cat">{p.category[lang]}</span>
+    <span class="rule"></span>
+  </div>
+)}
+
+<style>
+  .cover { width: 100%; aspect-ratio: 16 / 10; border-radius: 12px; object-fit: cover; }
+  .gen {
+    position: relative; overflow: hidden;
+    background: var(--pano); color: var(--lino);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: clamp(20px, 4%, 36px) clamp(20px, 4%, 36px) clamp(36px, 7%, 56px);
+  }
+  .gen::before {
+    /* patrón de sastre: costuras punteadas */
+    content: ''; position: absolute; inset: 18px; border: 1.5px dashed rgba(232, 197, 71, 0.45); border-radius: 8px;
+  }
+  .name { position: relative; font-family: var(--font-display); font-weight: 600; letter-spacing: -0.03em; line-height: 1; }
+  .cat { position: relative; color: var(--soft-on-dark); margin-top: 10px; }
+  .lg .name { font-size: clamp(34px, 5vw, 60px); }
+  .lg .cat { font-size: 17px; }
+  .sm .name { font-size: 30px; }
+  .sm .cat { font-size: 14px; }
+  .rule {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 14px;
+    background:
+      repeating-linear-gradient(90deg, var(--pano) 0 2px, transparent 2px 50px) 0 0 / 100% 9px no-repeat,
+      repeating-linear-gradient(90deg, var(--pano) 0 1px, transparent 1px 10px) 0 0 / 100% 5px no-repeat,
+      var(--tiza);
+  }
+</style>

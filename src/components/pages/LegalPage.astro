@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+import type { Lang } from '../../data/projects';
+
+interface Props { lang: Lang; title: string; description: string; alternate?: string }
+const { lang, title, description, alternate } = Astro.props;
+---
+<Base lang={lang} title={`${title} — TailorAI`} description={description} alternate={alternate}>
+  <article class="wrap legal section">
+    <h1>{title}</h1>
+    <slot />
+  </article>
+</Base>
+
+<style>
+  .legal { max-width: 760px; }
+  h1 { font-size: clamp(36px, 4vw, 52px); letter-spacing: -0.03em; margin-bottom: 32px; }
+  .legal :global(h2) { font-size: 24px; margin: 40px 0 8px; }
+  .legal :global(p), .legal :global(li) { color: var(--ink-2); }
+  .legal :global(.todo) { background: #f9eeda; padding: 12px 16px; border-left: 3px solid var(--tiza); }
+</style>

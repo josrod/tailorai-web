@@ -1,0 +1,16 @@
+---
+import Base from '../../layouts/Base.astro';
+import Hero from '../Hero.astro';
+import Sections from '../Sections.astro';
+import { ui, routes } from '../../i18n/ui';
+import type { Lang } from '../../data/projects';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = ui[lang];
+const other: Lang = lang === 'es' ? 'en' : 'es';
+---
+<Base lang={lang} title={t.meta.title} description={t.meta.description} alternate={routes[other].home}>
+  <Hero lang={lang} />
+  <Sections lang={lang} />
+</Base>

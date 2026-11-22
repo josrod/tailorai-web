@@ -1,0 +1,68 @@
+---
+import { site } from '../config';
+import { ui, routes } from '../i18n/ui';
+import type { Lang } from '../data/projects';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = ui[lang].guide;
+---
+<form
+  class="guide-form" data-guide-form
+  action={site.guideWebhookUrl} method="post"
+  data-ok={t.ok} data-error={t.error} data-sending={t.sending} data-lang={lang}
+>
+  <div class="field">
+    <label for="guide-email">{t.label}</label>
+    <input id="guide-email" name="email" type="email" required autocomplete="email" placeholder={t.placeholder} />
+  </div>
+  <!-- Campo trampa para bots: los humanos no lo ven -->
+  <div class="hp" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off" /></label></div>
+  <button class="btn btn-ink" type="submit">{t.submit}</button>
+  <p class="consent">{t.consent} <a href={routes[lang].privacy}>{t.privacy}</a></p>
+  <p class="status" role="status" aria-live="polite"></p>
+</form>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-guide-form]').forEach((form) => {
+    const status = form.querySelector<HTMLElement>('.status')!;
+    const button = form.querySelector<HTMLButtonElement>('button')!;
+    const label = button.textContent;
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      if (data.get('website')) return;
+      button.disabled = true;
+      button.textContent = form.dataset.sending ?? '…';
+      status.textContent = '';
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: data.get('email'), lang: form.dataset.lang, source: 'guide' }),
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        form.reset();
+        status.textContent = form.dataset.ok ?? '';
+      } catch {
+        status.textContent = form.dataset.error ?? '';
+      } finally {
+        button.disabled = false;
+        button.textContent = label;
+      }
+    });
+  });
+</script>
+
+<style>
+  .guide-form { flex: 1 1 420px; display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; }
+  .field { flex: 1 1 240px; display: flex; flex-direction: column; gap: 6px; }
+  label { font-size: 14px; font-weight: 600; }
+  input {
+    font: inherit; min-height: 48px; padding: 0 16px; border: 1px solid var(--line-strong);
+    border-radius: 10px; background: #fff; color: var(--pano);
+  }
+  .hp { position: absolute; left: -9999px; }
+  .consent, .status { flex-basis: 100%; margin: 4px 0 0; font-size: 14px; color: var(--muted); }
+  .status:empty { display: none; }
+</style>

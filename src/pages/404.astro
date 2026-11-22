@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import { ui } from '../i18n/ui';
+const t = ui.es.notFound;
+---
+<Base lang="es" title={`${t.title} — TailorAI`} description={t.lead}>
+  <section class="wrap section">
+    <h1 style="font-size: clamp(36px, 5vw, 60px); letter-spacing: -0.03em; margin-bottom: 16px">{t.title}</h1>
+    <p class="lead" style="margin-bottom: 32px">{t.lead}</p>
+    <a class="btn btn-ink" href="/">{t.home}</a>
+    <p style="margin-top: 24px"><a href="/en/" lang="en">Go to the English site</a></p>
+  </section>
+</Base>

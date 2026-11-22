@@ -1,0 +1,79 @@
+---
+import { site, bookingHref } from '../config';
+import { ui, routes } from '../i18n/ui';
+import type { Lang } from '../data/projects';
+
+interface Props { lang: Lang; alternate?: string }
+const { lang, alternate } = Astro.props;
+const t = ui[lang];
+const home = routes[lang].home;
+const links = [
+  { href: `${home}#work`, label: t.nav.work },
+  { href: `${home}#process`, label: t.nav.process },
+  { href: `${home}#pricing`, label: t.nav.pricing },
+  { href: `${home}#about`, label: t.nav.about },
+];
+const otherLang: Lang = lang === 'es' ? 'en' : 'es';
+const langHref = alternate ?? routes[otherLang].home;
+---
+<header class="site-header dark">
+  <nav class="wrap bar" aria-label={lang === 'es' ? 'Principal' : 'Main'}>
+    <a class="brand" href={home}>
+      <span class="word">{site.brand}</span>
+      <span class="by">{t.by} {site.ownerShort}</span>
+    </a>
+
+    <ul class="links" role="list">
+      {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      <li><a class="lang" href={langHref} hreflang={otherLang} lang={otherLang} aria-label={t.langSwitch.aria}>{t.langSwitch.short}</a></li>
+      <li><a class="btn btn-chalk" href={bookingHref(t.cta.subject)}>{t.nav.book}</a></li>
+    </ul>
+
+    <details class="mobile">
+      <summary aria-label={t.nav.menu}>
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+      </summary>
+      <ul role="list">
+        {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        <li><a href={langHref} hreflang={otherLang} lang={otherLang}>{t.langSwitch.label}</a></li>
+        <li><a class="btn btn-chalk" href={bookingHref(t.cta.subject)}>{t.nav.book}</a></li>
+      </ul>
+    </details>
+  </nav>
+</header>
+
+<style>
+  .site-header { position: relative; z-index: 10; }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 18px; }
+  .brand { display: flex; align-items: baseline; gap: 10px; text-decoration: none; color: var(--lino); }
+  .word {
+    font-family: var(--font-display); font-weight: 700; font-size: 24px; letter-spacing: -0.02em;
+    border-bottom: 2px dashed var(--tiza); padding-bottom: 2px;
+  }
+  .by { font-size: 14px; color: var(--muted-on-dark); }
+  .links { display: flex; align-items: center; gap: 28px; list-style: none; margin: 0; padding: 0; font-size: 15px; }
+  .links a:not(.btn) { color: var(--lino); text-decoration: none; }
+  .links a:not(.btn):hover { text-decoration: underline; }
+  .lang { font-weight: 600; letter-spacing: 0.04em; }
+  .btn { min-height: 44px; padding: 0 20px; font-size: 15px; }
+
+  .mobile { display: none; position: relative; }
+  .mobile summary {
+    list-style: none; width: 44px; height: 44px; border: 1px solid var(--line-dark); border-radius: 999px;
+    display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--lino);
+  }
+  .mobile summary::-webkit-details-marker { display: none; }
+  .mobile ul {
+    position: absolute; right: 0; top: 54px; min-width: 240px; list-style: none; margin: 0; padding: 12px;
+    background: var(--pano-deep); border: 1px solid var(--line-dark); border-radius: 12px;
+    display: grid; gap: 4px;
+  }
+  .mobile li a:not(.btn) { display: block; padding: 10px 12px; color: var(--lino); text-decoration: none; border-radius: 8px; }
+  .mobile li a:not(.btn):hover { background: #24324f; }
+  .mobile .btn { width: 100%; margin-top: 8px; }
+
+  @media (max-width: 860px) {
+    .links { display: none; }
+    .mobile { display: block; }
+  }
+</style>

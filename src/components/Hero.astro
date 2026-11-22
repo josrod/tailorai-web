@@ -1,0 +1,139 @@
+---
+import { bookingHref } from '../config';
+import { ui } from '../i18n/ui';
+import { fichaProjects, type Lang } from '../data/projects';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = ui[lang];
+const ticks = Array.from({ length: 12 }, (_, i) => i * 5);
+---
+<section class="hero dark" aria-labelledby="hero-title">
+  <div class="wrap grid">
+    <div class="copy">
+      <h1 id="hero-title">{t.hero.title}</h1>
+      <p class="lead-hero">{t.hero.lead}</p>
+      <div class="ctas">
+        <a class="btn btn-chalk big" href={bookingHref(t.cta.subject)}>{t.hero.primary}</a>
+        <a class="btn btn-ghost big" href="#work">{t.hero.secondary}</a>
+      </div>
+      <p class="note">{t.hero.note}</p>
+    </div>
+
+    <div class="ficha-wrap">
+      <div class="tape" aria-hidden="true">{ticks.map((n) => <span>{n}</span>)}</div>
+      <div class="ficha rise">
+        <div class="ficha-head">
+          <h2>{t.ficha.title}</h2>
+          <span>{t.ficha.tag}</span>
+        </div>
+
+        <div class="tabs" role="tablist" aria-label={t.ficha.choose} data-tabs hidden>
+          {fichaProjects.map((p, i) => (
+            <button
+              type="button" role="tab" id={`tab-${p.slug}`} aria-controls={`panel-${p.slug}`}
+              aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}
+            >{p.name}</button>
+          ))}
+        </div>
+
+        {fichaProjects.map((p, i) => (
+          <div class="panel" role="tabpanel" id={`panel-${p.slug}`} aria-labelledby={`tab-${p.slug}`} hidden={i !== 0}>
+            <p class="client">{p.category[lang]}</p>
+            <dl>
+              {p.measures!.map((m) => (
+                <div class="row">
+                  <dt>{m.k[lang]}</dt>
+                  <span class="leader" aria-hidden="true"></span>
+                  <dd>{m.v[lang]}</dd>
+                </div>
+              ))}
+            </dl>
+            <div class="pattern">
+              <p class="pattern-label">{t.ficha.pattern}</p>
+              <p class="pattern-text">{p.built[lang]}</p>
+            </div>
+            <a class="open" href={p.url} target="_blank" rel="noopener">{t.ficha.open}<span class="sr-only"> {t.work.opensNew}</span></a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((list) => {
+    const tabs = Array.from(list.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+    list.hidden = false;
+    const select = (tab: HTMLButtonElement, focus = false) => {
+      tabs.forEach((t) => {
+        const on = t === tab;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        const panel = document.getElementById(t.getAttribute('aria-controls')!);
+        if (panel) panel.hidden = !on;
+      });
+      if (focus) tab.focus();
+    };
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => select(tab));
+      tab.addEventListener('keydown', (e) => {
+        const k = e.key;
+        if (k !== 'ArrowRight' && k !== 'ArrowLeft' && k !== 'Home' && k !== 'End') return;
+        e.preventDefault();
+        const n = tabs.length;
+        const next = k === 'Home' ? 0 : k === 'End' ? n - 1 : (i + (k === 'ArrowRight' ? 1 : -1) + n) % n;
+        select(tabs[next], true);
+      });
+    });
+  });
+</script>
+
+<style>
+  .hero { padding-block: clamp(48px, 7vw, 72px) clamp(72px, 10vw, 112px); }
+  .grid { display: flex; flex-wrap: wrap; gap: 56px 64px; align-items: center; }
+  .copy { flex: 1 1 460px; min-width: 0; }
+  h1 {
+    font-size: clamp(42px, 5.4vw, 76px); line-height: 1.02; letter-spacing: -0.035em;
+    margin-bottom: 28px; max-width: 13em;
+  }
+  .lead-hero { font-size: clamp(18px, 1.6vw, 20px); line-height: 1.55; color: var(--soft-on-dark); max-width: 34em; margin: 0 0 36px; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 20px; }
+  .big { min-height: 54px; padding: 0 28px; font-size: 17px; }
+  .note { font-size: 15px; color: var(--muted-on-dark); margin: 0; }
+
+  .ficha-wrap { flex: 1 1 400px; min-width: 0; max-width: 520px; }
+  .ficha { background: var(--papel); color: var(--pano); border-radius: 0 0 var(--radius) var(--radius); padding: 28px 30px 26px; }
+  .rise { animation: rise .7s ease-out 1.1s both; }
+  .ficha-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .ficha-head h2 { font-size: 26px; letter-spacing: -0.02em; }
+  .ficha-head span { font-size: 14px; color: var(--muted); }
+
+  .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 20px; }
+  .tabs[hidden] { display: none; }
+  [role='tab'] {
+    font: inherit; font-size: 14px; font-weight: 600; min-height: 44px; padding: 0 16px; border-radius: 999px; cursor: pointer;
+    background: transparent; color: var(--pano); border: 1px solid var(--line-strong);
+  }
+  [role='tab'][aria-selected='true'] { background: var(--pano); color: var(--lino); border-color: var(--pano); }
+
+  .client { font-size: 15px; color: var(--muted); margin: 16px 0 6px; }
+  .tabs:not([hidden]) + .panel .client, .tabs:not([hidden]) ~ .panel .client { margin-top: 0; }
+  dl { margin: 0; }
+  .row { display: flex; align-items: baseline; gap: 10px; padding: 11px 0; border-bottom: 1px dashed var(--line); }
+  dt { font-weight: 600; font-size: 15px; white-space: nowrap; }
+  .leader { flex: 1 1 auto; min-width: 16px; border-bottom: 1px dotted var(--line-strong); transform: translateY(-4px); }
+  dd { margin: 0; font-size: 15px; color: var(--muted); text-align: right; }
+  .pattern { margin-top: 20px; padding: 16px 18px; background: var(--pano); color: var(--lino); border-radius: 10px; }
+  .pattern-label { margin: 0 0 4px; font-size: 13px; font-weight: 600; color: var(--tiza); }
+  .pattern-text { margin: 0; font-size: 16px; font-weight: 500; line-height: 1.45; }
+  .open { display: inline-block; margin-top: 16px; font-size: 15px; font-weight: 600; color: var(--pano) !important; }
+
+  @media (max-width: 520px) {
+    .ficha { padding: 22px 20px; }
+    .row { flex-direction: column; gap: 0; }
+    .leader { display: none; }
+    dt { white-space: normal; }
+    dd { text-align: left; }
+  }
+</style>

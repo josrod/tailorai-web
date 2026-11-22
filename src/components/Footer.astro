@@ -1,0 +1,32 @@
+---
+import { site } from '../config';
+import { ui, routes } from '../i18n/ui';
+import type { Lang } from '../data/projects';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = ui[lang];
+const r = routes[lang];
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="wrap row">
+    <p>© {year} {site.brand} — {site.owner}, {site.city}, {site.country}</p>
+    <nav aria-label={lang === 'es' ? 'Pie de página' : 'Footer'}>
+      <a href={r.projects}>{t.footer.projects}</a>
+      <a href={site.linkedin} rel="me">LinkedIn</a>
+      <a href={site.github} rel="me">GitHub</a>
+      <a href={r.imprint}>{t.footer.imprint}</a>
+      <a href={r.privacy}>{t.footer.privacy}</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .site-footer { background: var(--pano-deep); color: var(--muted-on-dark); padding-block: 40px; font-size: 15px; }
+  .row { display: flex; flex-wrap: wrap; gap: 16px 40px; justify-content: space-between; align-items: center; }
+  p { margin: 0; }
+  nav { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+  a { color: var(--lino); }
+  a:hover { color: var(--tiza); }
+</style>

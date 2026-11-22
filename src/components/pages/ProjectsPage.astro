@@ -1,0 +1,49 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProjectCover from '../ProjectCover.astro';
+import { ui, routes } from '../../i18n/ui';
+import { published, type Lang } from '../../data/projects';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = ui[lang];
+const other: Lang = lang === 'es' ? 'en' : 'es';
+---
+<Base lang={lang} title={t.meta.projectsTitle} description={t.meta.projectsDescription} alternate={routes[other].projects}>
+  <section class="head dark">
+    <div class="wrap">
+      <h1>{t.projectsPage.title}</h1>
+      <p class="lead">{t.projectsPage.lead}</p>
+    </div>
+  </section>
+  <section class="section">
+    <ul class="wrap grid" role="list">
+      {published.map((p) => (
+        <li class="card">
+          <ProjectCover project={p} lang={lang} size="sm" />
+          <h2>{p.name}</h2>
+          <p class="kicker">{p.category[lang]}</p>
+          <p class="body">{p.built[lang]}</p>
+          <p class="stack">{p.stack.join(', ')}</p>
+          {p.finance && <p class="disclaimer">{t.work.finance}</p>}
+          <a href={p.url} target="_blank" rel="noopener">{t.work.open}<span class="sr-only"> {t.work.opensNew}</span></a>
+        </li>
+      ))}
+    </ul>
+    <p class="wrap back"><a href={routes[lang].home}>{t.projectsPage.back}</a></p>
+  </section>
+</Base>
+
+<style>
+  .head { padding-block: 64px 72px; }
+  h1 { font-size: clamp(42px, 5vw, 64px); letter-spacing: -0.035em; line-height: 1.02; }
+  .grid { list-style: none; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 56px 40px; }
+  .card { display: flex; flex-direction: column; }
+  .card h2 { font-size: 26px; letter-spacing: -0.02em; margin-top: 20px; }
+  .kicker { margin: 2px 0 10px; font-size: 15px; color: var(--muted); }
+  .body { margin: 0 0 10px; flex: 1; }
+  .stack { margin: 0 0 12px; font-size: 14px; color: var(--muted); }
+  .disclaimer { margin: 0 0 12px; font-size: 14px; color: var(--muted); }
+  .card a { font-weight: 600; }
+  .back { margin-top: 64px; font-weight: 600; }
+</style>
