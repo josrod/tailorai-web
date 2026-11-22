@@ -78,7 +78,7 @@ export const ui = {
     about: {
       title: 'Hola, soy José.',
       alt: 'José, fundador de TailorAI',
-      p1: (years: string) => `Llevo ${years} años dirigiendo proyectos de software con equipos de desarrollo. TailorAI es donde aplico esa disciplina a negocios pequeños: entender el flujo, quitar fricción y medir el resultado.`,
+      p1: (years: number) => `Llevo más de ${years} años trabajando en software y hoy dirijo proyectos con equipos de desarrollo. TailorAI es donde aplico esa disciplina a negocios pequeños: entender el flujo, quitar fricción y medir el resultado.`,
       p2: 'Trabajo directamente contigo, sin intermediarios. Vivo en Alemania y trabajo en remoto en español e inglés.',
       creds: ['Gestión de producto y equipos con Kanban y Flight Levels', 'Automatización con n8n, Make y Power Automate', 'Apps con React, Python y modelos de lenguaje'],
     },
@@ -181,7 +181,7 @@ export const ui = {
     about: {
       title: 'Hi, I’m José.',
       alt: 'José, founder of TailorAI',
-      p1: (years: string) => `I’ve spent ${years} years leading software projects with development teams. TailorAI is where I bring that discipline to small businesses: understand the flow, remove friction, measure the result.`,
+      p1: (years: number) => `I’ve worked in software for over ${years} years and today I lead projects with development teams. TailorAI is where I bring that discipline to small businesses: understand the flow, remove friction, measure the result.`,
       p2: 'You work with me directly, no middlemen. I live in Germany and work remotely in English and Spanish.',
       creds: ['Product and team management with Kanban and Flight Levels', 'Automation with n8n, Make and Power Automate', 'Apps with React, Python and language models'],
     },

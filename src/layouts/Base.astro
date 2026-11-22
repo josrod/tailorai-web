@@ -28,6 +28,8 @@ const jsonLd = {
   url: new URL('/', Astro.site).href,
   description,
   founder: { '@type': 'Person', name: site.owner, sameAs: [site.linkedin, site.github] },
+  address: { '@type': 'PostalAddress', addressLocality: site.city, addressRegion: site.region, addressCountry: 'DE' },
+  email: site.email,
   areaServed: ['ES', 'DE', 'LATAM'],
   availableLanguage: ['es', 'en'],
 };
