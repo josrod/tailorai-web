@@ -18,7 +18,7 @@ Todo lo que aparece entre `[corchetes]` en la web es un dato pendiente.
 
 | Dónde | Qué |
 | --- | --- |
-| `src/config.ts` | LinkedIn y webhook de la guía |
+| `src/config.ts` | Webhook de la guía |
 | `src/data/projects.ts` | Una cifra o cita real de resultado (`result`) por proyecto destacado; describir VitalPath y 5Bots y quitar `draft: true` |
 | `public/shots/` | Capturas reales de cada app (`image: '/shots/atelier.webp'`). Sin captura se muestra una portada generada |
 | `src/pages/impressum.astro`, `privacidad.astro`, `en/privacy.astro` | Dirección, teléfono, USt-ID. El hosting (Netlify) y Calendly ya están nombrados en privacidad. Revisar con un generador o asesor |

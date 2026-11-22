@@ -7,7 +7,7 @@ export const site = {
   city: 'Lingen',
   region: 'Niedersachsen',
   country: { es: 'Alemania', en: 'Germany' },
-  linkedin: 'https://www.linkedin.com/in/[tu-perfil]',
+  linkedin: 'https://www.linkedin.com/in/joseluisrodriguezgonzalez',
   github: 'https://github.com/josrod',
   // Enlace a tu calendario de reservas (Cal.com, Calendly, Google Calendar…).
   // Mientras esté vacío, los botones de reservar abren un correo.
