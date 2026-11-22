@@ -114,6 +114,10 @@ const book = bookingHref(t.cta.subject);
       <h2 id="about-h" class="h-section">{t.about.title}</h2>
       <p class="about-p1">{t.about.p1(site.yearsExperience)}</p>
       <p class="about-p2">{t.about.p2}</p>
+      <h3 class="tl-title">{t.about.timelineTitle}</h3>
+      <ol class="timeline" role="list">
+        {t.about.timeline.map((m) => <li><span class="tl-y">{m.y}</span><span class="tl-t">{m.t}</span></li>)}
+      </ol>
       <ul class="creds" role="list">{t.about.creds.map((c) => <li>{c}</li>)}</ul>
       <p class="social"><a href={site.linkedin} rel="me">LinkedIn</a><a href={site.github} rel="me">GitHub</a></p>
     </div>
@@ -196,12 +200,18 @@ const book = bookingHref(t.cta.subject);
   .plan li + li { margin-top: 4px; }
 
   /* Sobre mí */
-  .about { display: flex; flex-wrap: wrap; gap: 48px 80px; align-items: center; }
-  .portrait { flex: 0 1 400px; width: 100%; max-width: 400px; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius); }
+  .about { display: flex; flex-wrap: wrap; gap: 48px 80px; align-items: flex-start; }
+  .portrait { flex: 0 1 400px; position: sticky; top: 24px; width: 100%; max-width: 400px; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius); }
   .about-text { flex: 1 1 420px; min-width: 0; }
   .about-text h2 { margin-bottom: 20px; }
   .about-p1 { margin: 0 0 16px; font-size: 19px; color: var(--ink-2); max-width: 32em; }
   .about-p2 { margin: 0 0 28px; color: var(--muted); max-width: 32em; }
+  .tl-title { font-size: 20px; margin: 0 0 12px; }
+  .timeline { list-style: none; margin: 0 0 32px; padding: 0; border-top: 1px solid var(--line); }
+  .timeline li { display: grid; grid-template-columns: 7.5em 1fr; gap: 4px 20px; padding: 12px 0; border-bottom: 1px dashed var(--line); }
+  .tl-y { font-family: var(--font-display); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .tl-t { color: var(--ink-2); }
+  @media (max-width: 520px) { .timeline li { grid-template-columns: 1fr; } }
   .creds { list-style: none; margin: 0 0 28px; padding: 0; display: grid; gap: 10px; }
   .creds li { padding-left: 20px; border-left: 3px solid var(--tiza); }
   .social { display: flex; gap: 24px; font-weight: 600; margin: 0; }
