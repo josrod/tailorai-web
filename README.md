@@ -18,11 +18,10 @@ Todo lo que aparece entre `[corchetes]` en la web es un dato pendiente.
 
 | Dónde | Qué |
 | --- | --- |
-| `src/config.ts` | Apellido, correo, ciudad, LinkedIn, años de experiencia, URL de reservas y webhook de la guía |
+| `src/config.ts` | Correo, ciudad, LinkedIn, años de experiencia y webhook de la guía |
 | `src/data/projects.ts` | Una cifra o cita real de resultado (`result`) por proyecto destacado; describir VitalPath y 5Bots y quitar `draft: true` |
 | `public/shots/` | Capturas reales de cada app (`image: '/shots/atelier.webp'`). Sin captura se muestra una portada generada |
-| `src/i18n/ui.ts` | Si los precios llevan IVA y el precio mínimo de "A medida" |
-| `src/pages/impressum.astro`, `privacidad.astro`, `en/privacy.astro` | Dirección, teléfono, USt-ID y proveedor de hosting. Revisar con un generador o asesor |
+| `src/pages/impressum.astro`, `privacidad.astro`, `en/privacy.astro` | Dirección, teléfono, USt-ID. El hosting (Netlify) y Calendly ya están nombrados en privacidad. Revisar con un generador o asesor |
 | `.env` / `astro.config.mjs` | `SITE_URL` con el dominio definitivo; actualizar también `public/robots.txt` |
 
 ## Cómo está organizado

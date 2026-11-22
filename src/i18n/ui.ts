@@ -66,13 +66,13 @@ export const ui = {
     },
     pricing: {
       title: 'Precios',
-      lead: 'Precio cerrado antes de empezar. Sin cuotas mensuales obligatorias. [Indica si los precios incluyen IVA.]',
+      lead: 'Precio cerrado antes de empezar. IVA incluido. Sin cuotas mensuales obligatorias.',
       recommended: 'Recomendado',
       cta: 'Reservar llamada',
       plans: [
         { t: 'Primera prueba', d: 'Para probar la IA en un proceso concreto.', p: '1.250 €', f: ['Una solución a medida', 'Entrega en 2 semanas', '30 días de soporte'] },
         { t: 'Crecimiento', d: 'Para automatizar varias áreas del negocio.', p: '3.500 €', f: ['Hasta 3 soluciones', 'Entrega prioritaria', '90 días de soporte', 'Revisión y mejora mensual'], highlight: true },
-        { t: 'A medida', d: 'Proyectos mayores o integraciones con tus sistemas.', p: 'Desde [precio]', f: ['Alcance definido contigo', 'Integraciones con ERP, CRM o bases de datos', 'Mantenimiento continuo'] },
+        { t: 'A medida', d: 'Proyectos mayores o integraciones con tus sistemas.', p: 'Desde 5.000 €', f: ['Alcance definido contigo', 'Integraciones con ERP, CRM o bases de datos', 'Mantenimiento continuo'] },
       ],
     },
     about: {
@@ -169,13 +169,13 @@ export const ui = {
     },
     pricing: {
       title: 'Pricing',
-      lead: 'Fixed price before we start. No mandatory monthly fees. [State whether prices include VAT.]',
+      lead: 'Fixed price before we start. VAT included. No mandatory monthly fees.',
       recommended: 'Recommended',
       cta: 'Book a call',
       plans: [
         { t: 'First fit', d: 'To try AI on one specific process.', p: '€1,250', f: ['One custom solution', 'Delivered in 2 weeks', '30 days of support'] },
         { t: 'Growth', d: 'To automate several areas of the business.', p: '€3,500', f: ['Up to 3 solutions', 'Priority delivery', '90 days of support', 'Monthly review'], highlight: true },
-        { t: 'Bespoke', d: 'Larger projects or integrations with your systems.', p: 'From [price]', f: ['Scope defined with you', 'ERP, CRM or database integrations', 'Ongoing maintenance'] },
+        { t: 'Bespoke', d: 'Larger projects or integrations with your systems.', p: 'From €5,000', f: ['Scope defined with you', 'ERP, CRM or database integrations', 'Ongoing maintenance'] },
       ],
     },
     about: {
